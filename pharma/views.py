@@ -1,4 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib.auth import login,authenticate,logout
+from django.contrib.auth.models import User,auth
+from django.contrib import messages
+
 
 # Create your views here.
 from .models import Dealer
@@ -7,6 +11,29 @@ from .models import Customer
 from .models import Medicine
 from .models import Purchase
 from django.db import IntegrityError
+
+
+def login_page(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user=auth.authenticate(username=username,password=password)
+        if user is not None:
+            login(request,user)
+            # return HttpResponse("hi")
+            return redirect("index")
+        else:
+            messages.error(request,'Invalid Login Details')
+            return redirect("login_page")
+
+        
+    else:
+        return render(request,"pharma/login.html")
+
+def user_logout(request):
+    logout(request)
+    return redirect("login_page")
+
 
 
 def home(request):

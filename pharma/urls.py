@@ -2,7 +2,11 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.home, name='index'),
+    url(r'^$', views.login_page, name='login_page'),
+    url(r'^user_logout', views.user_logout, name='user_logout'),
+
+    url(r'^index', views.home, name='index'),
+
 
     url(r'^dealerform/', views.dealerform, name="dealerform"),
     url(r'^dealerforminsert/', views.dealerforminsert, name="dealerforminsert"),
